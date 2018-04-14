@@ -10,6 +10,7 @@ library(tidytext)
 library(dplyr)
 library(scales)
 
+#Choose Bing lexicon from tidytext
 bing <- get_sentiments("bing")
 
 #Arular
@@ -99,11 +100,16 @@ sentiment_maya$Album <- "/\\/\\/\\Y/\\"
 sentiment_matangi$Album <- "Matangi"
 sentiment_aim$Album <- "AIM"
 
+#Using ICD-9 code rule of 3 :)
 full <- rbind(sentiment_arular[sentiment_arular$n>=3, ], sentiment_kala[sentiment_kala$n>=3, ], sentiment_maya[sentiment_maya$n>=3, ], sentiment_matangi[sentiment_matangi$n>=3, ], sentiment_aim[sentiment_aim$n>=3, ])
+#Reorder factor levels
 full$Album <- factor(full$Album, levels=c("Arular", "Kala", "/\\/\\/\\Y/\\", "Matangi", "AIM"))
 full$word <- factor(full$word, levels=unique(full$word[order(full$n, decreasing = FALSE)]), ordered=TRUE)
 
+#Order word count by album
 fullorder <- full %>% group_by(Album) %>% ungroup() %>% arrange(Album, n) %>% mutate(order = row_number())
+
+#Plot
 p1 <- ggplot(data=fullorder, aes(x=order, y=n, fill=sentiment)) + geom_bar(stat="identity") 
 p1 <- p1 +scale_x_continuous(breaks = fullorder$order,labels=fullorder$word,expand = c(0,0)) + scale_y_continuous(breaks= pretty_breaks())
 p1 <- p1 + coord_flip() + facet_wrap(~Album, scales="free")
@@ -111,7 +117,7 @@ p1 <- p1 + coord_flip() + facet_wrap(~Album, scales="free")
 p1 <- p1 + scale_fill_manual("", values=c("#230A05", "#FE5E22")) + theme(legend.position = c(0.85, 0.25)) + xlab("Word") + ylab("Word Count") + ggtitle("Sentiment Analysis of M.I.A.'s Most Used Words per Album")
 ggsave(p1, filename="word_sentiment_by_album.png", dpi=300, units="in")
 
-#Get overall percentages
+#Get overall counts per album
 ovrl <- rbind(sentiment_arular, sentiment_kala, sentiment_maya, sentiment_matangi, sentiment_aim)
 ovrlcnts <- ovrl %>% group_by(Album, sentiment) %>% summarise(counts = sum(n))
 ovrlcnts$Album <- factor(ovrlcnts$Album, levels=c("Arular", "Kala", "/\\/\\/\\Y/\\", "Matangi", "AIM"))
