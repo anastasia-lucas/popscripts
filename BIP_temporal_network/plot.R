@@ -1,6 +1,7 @@
 
 #Adapted from: 
 #http://estebanmoro.org/2012/11/temporal-networks-with-igraph-and-r-with-20-lines-of-code/
+#Tried to clean this up before posting, so feel free to open an issue if there are any bugs.
 
 library(igraph)
 library(png)
