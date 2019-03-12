@@ -1,6 +1,6 @@
 
 #Adapted from: 
-#http://estebanmoro.org/2012/11/temporal-networks-with-igraph-and-r-with-20-lines-of-code/
+#hhttp://estebanmoro.org/post/2012-11-10-temporal-networks-with-igraph-and-r-with-20-lines-of-code/
 #Tried to clean this up before posting, so feel free to open an issue if there are any bugs.
 #All relevant files are in materials folder
 
