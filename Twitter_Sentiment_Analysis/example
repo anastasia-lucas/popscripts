@@ -15,19 +15,19 @@ token <- create_token(
   access_secret = access_token_secret)
 get_token()
 
-lg6 <- search_tweets(
-  "#lg6", n = 18000, include_rts = FALSE, lang="en"
+dat <- search_tweets(
+  "keyword", n = 18000, include_rts = FALSE, lang="en"
 )
 
-lg <- search_tweets(
-  "@ladygaga", n = 18000, include_rts = FALSE, lang="en"
+usr <- search_tweets(
+  "@username", n = 18000, include_rts = FALSE, lang="en"
 )
 
-tl <- get_timelines('ladygaga', n=3200, include_rts = FALSE)
+tl <- get_timelines('username', n=3200, include_rts = FALSE)
 
 #Get 100 tweets per day and post-filter retweets
-lg6year <- search_fullarchive(
-  q='#lg6 lang:en',
+byyear <- search_fullarchive(
+  q='#hastag lang:en',
   n=100,
   fromDate = '201903122359',
   toDate = '201903132359',
